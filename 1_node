@@ -1,0 +1,33 @@
+const express=require('express');
+const app=express();
+
+//get , post , patch ,delete
+//http:/localhost:4000/user
+
+app.get("/user",(req, res,next )=>{
+    res.status(200).json({user: "We are here at / route"});
+});
+app.post("/user",(req , res , next)=>{
+    res.status(200).json({ msg: "User register is Success "});
+});
+
+app.patch("/user/:id/:name",(req , res, next)=>{
+    let id=req.params.id;
+    let name=req.params.name;
+    res.status(200).json({ message:` user id is ${id} and user name is ${name}`});
+
+});
+
+app.delete("/user/:id",(req , res , next)=>{
+    let id=req.params.id;
+    res.status(200).json({mes :"User delete id is" + id});
+});
+
+
+app.get("*",(reg , res ,next)=>{
+    res.json({ msg: "No route found!"});
+});
+
+app.listen(4000,()=>{
+    console.log("We are running at port / 4000");
+});

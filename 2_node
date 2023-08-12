@@ -1,0 +1,65 @@
+const express=require('express');
+const app=express();
+
+app.use(express.json());
+
+
+let users=[
+    {id:1, name:"Mg Mg", age:22},
+    {id:2, name:"Aung Aung", age:21},
+    {id:3, name:"Ko Ko", age:24}
+];
+
+app.delete("/user/:id",(req,res)=>{
+    let id=req.params.id;
+    let user=users.filter(usr=>usr.id!=id);
+    res.json(user);
+})
+
+app.post("/user",(req,res)=>{
+    let id=req.body.id;
+    let name=req.body.name;
+    let age=req.body.age;
+    let newUser={
+        id:id,
+        name:name,
+        age:age
+    };
+    users.push(newUser);
+    // console.log("Request id is",id);
+    // res.json({msg:"User Post method"});
+    res.json(users);
+});
+
+app.patch("/user/:id",(req,res)=>{
+    let id=req.params.id;
+    let addName=users.find(usr=>usr.id==id);
+    if(addName){
+        addName.name=req.body.name;
+        res.json(users);
+    }else{
+        res.json({msg:"User cannot find with that id!"});
+    };
+});
+
+app.get("/user",(req , res, next)=>{
+    res.json(users);
+});
+
+app.get("/user/:id/:name",(req , res)=>{
+    let id=req.params.id;
+    let name=req.params.name;
+    let user=users.find(usr=>usr.id==id);
+    // let user=users.find(usr=>usr.name==name);
+    if(user){
+        res.json(user);
+    }else{
+        res.json({msg:"No user with that id!"});
+    }
+})
+
+app.get("*",(req ,res)=>{
+    res.json({msg:"No route found!"});
+});
+
+app.listen(3000,console.log("Server is running at port 3000"));
