@@ -1,21 +1,18 @@
 const router=require('express').Router();
+const controller=require('../controllers/post');
 
-// router.get("/",(req,res)=>{
-//     res.json({msg:"All posts found!"});
-// });
+router.get("/",controller.all
+);
 
-// router.get("/:id",(req,res)=>{
-//     let id=req.params.id;
-//     res.json({msg:"User post method id is " + id});
-// });
+router.get("/:id",controller.get);
 
-// router.post("/",(req,res)=>{
-//     res.json(req.body);
-// });
+
+router.post("/",controller.post);
+
 router.route("/:id")
-.get((req,res)=>res.json({msg:"User post method id is " + req.params.id}))
-.patch((req,res)=>res.json({msg:"User patch method id is "+req.params.id}))
-.delete((req,res)=>res.json({msg:"User delete method id is "+req.params.id}));
+.get(controller.get)
+.patch(controller.patch)
+.delete(controller.drop);
 
 
 module.exports=router;
